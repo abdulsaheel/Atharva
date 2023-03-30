@@ -1,65 +1,45 @@
-import speech_recognition as sr
-import lcd_library as lcd
 import time
+import speech_recognition as sr
 
-# Set up LCD screen
-lcd_pinmap = {
-    'RS': 37,
-    'E': 35,
-    'D4': 33,
-    'D5': 31,
-    'D6': 29,
-    'D7': 27,
-    'LED': 23
-}
-lcd.init(lcd_pinmap)
+# Function to display messages on an LCD screen (not used in this example)
+def display_message(message):
+    pass
 
-# Define cute eye and tongue animations
-eye_animations = ['OwO', 'oWo', 'Owo', 'QwQ', 'qWq', 'QWQ']
-tongue_animations = [' :3', ' UwU', ' >w<', ' ^w^', ' ;w;', ' qwq']
-
-# Define function to take audio input
-def get_audio_input():
+# Main program loop
+while True:
+    # Code to listen for voice input and convert to text
     r = sr.Recognizer()
     with sr.Microphone() as source:
+        print("Say something!")
         audio = r.listen(source)
-    text = r.recognize_google(audio)
-    return text
 
-# Define function to parse user input and generate API query
-def generate_query(user_input):
-    # Define your logic for generating a query based on user input
-    return query
+    try:
+        text = r.recognize_google(audio)
+        print("You said: " + text)
 
-# Define function to make API requests and process response data
-def make_request(query):
-    # Define your code for making API requests and processing response data
-    return response_data
+    except sr.UnknownValueError:
+        print("Sorry, I didn't catch that.")
 
-# Define function to display response data on LCD screen with cute animations
-def display_response(response_data):
-    # Define your code for formatting and displaying response data on the LCD screen with cute animations
-    for i in range(3):
-        lcd.clear()
-        lcd.write(random.choice(eye_animations))
-        time.sleep(0.5)
-        lcd.clear()
-        lcd.write(random.choice(tongue_animations))
-        time.sleep(0.5)
-    lcd.clear()
-    lcd.write(response_data)
+    except sr.RequestError as e:
+        print("Sorry, something went wrong. Error message: " + str(e))
 
-# Main loop
-while True:
-    # Prompt user for input
-    lcd.write("Say something...")
-    user_input = get_audio_input()
+    # Code to display text on the LCD screen
+    display_message(text)
 
-    # Generate query from user input
-    query = generate_query(user_input)
+    # Code to process the text input and provide a response
+    response = "I'm sorry, I didn't understand that."
 
-    # Make API request and process response data
-    response_data = make_request(query)
+    if "hello" in text.lower():
+        response = "Hello there!"
 
-    # Display response data on LCD screen with cute animations
-    display_response(response_data)
+    elif "how are you" in text.lower():
+        response = "I'm doing well, thank you for asking."
+
+    elif "what's the weather like" in text.lower():
+        response = "I'm sorry, I don't have that information."
+
+    # Code to display the response on the LCD screen
+    display_message(response)
+
+    # Wait for a short time before repeating the loop
+    time.sleep(1)
