@@ -1,0 +1,65 @@
+import speech_recognition as sr
+import lcd_library as lcd
+import time
+
+# Set up LCD screen
+lcd_pinmap = {
+    'RS': 37,
+    'E': 35,
+    'D4': 33,
+    'D5': 31,
+    'D6': 29,
+    'D7': 27,
+    'LED': 23
+}
+lcd.init(lcd_pinmap)
+
+# Define cute eye and tongue animations
+eye_animations = ['OwO', 'oWo', 'Owo', 'QwQ', 'qWq', 'QWQ']
+tongue_animations = [' :3', ' UwU', ' >w<', ' ^w^', ' ;w;', ' qwq']
+
+# Define function to take audio input
+def get_audio_input():
+    r = sr.Recognizer()
+    with sr.Microphone() as source:
+        audio = r.listen(source)
+    text = r.recognize_google(audio)
+    return text
+
+# Define function to parse user input and generate API query
+def generate_query(user_input):
+    # Define your logic for generating a query based on user input
+    return query
+
+# Define function to make API requests and process response data
+def make_request(query):
+    # Define your code for making API requests and processing response data
+    return response_data
+
+# Define function to display response data on LCD screen with cute animations
+def display_response(response_data):
+    # Define your code for formatting and displaying response data on the LCD screen with cute animations
+    for i in range(3):
+        lcd.clear()
+        lcd.write(random.choice(eye_animations))
+        time.sleep(0.5)
+        lcd.clear()
+        lcd.write(random.choice(tongue_animations))
+        time.sleep(0.5)
+    lcd.clear()
+    lcd.write(response_data)
+
+# Main loop
+while True:
+    # Prompt user for input
+    lcd.write("Say something...")
+    user_input = get_audio_input()
+
+    # Generate query from user input
+    query = generate_query(user_input)
+
+    # Make API request and process response data
+    response_data = make_request(query)
+
+    # Display response data on LCD screen with cute animations
+    display_response(response_data)
