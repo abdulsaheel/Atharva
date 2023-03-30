@@ -43,3 +43,6 @@ while True:
 
     # Wait for a short time before repeating the loop
     time.sleep(1)
+    
+    
+pip install --global-option='build_ext' --global-option='-I/usr/local/include' --global-option='-L/usr/local/lib' pyaudio
